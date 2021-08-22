@@ -1,15 +1,15 @@
-class CartsController < ApplicationController 
-	# before_action :authorized, only: [:cart_checkout] 	
+class CartsController < ApplicationController
+	# before_action :authorized, only: [:cart_checkout]
   # Ensures that the cart_id parameter exists in the request
   # and that the cart_id exists in the Cart table
 
- # POST   /api/v1/carts
+ # POST   {{root_url}}/carts
   def create
     cart = Cart.create!
     render json: { status: 'SUCCESS', message: 'Cart created.', cart: cart }, status: :created
   end
 
- # GET    /api/v1/carts/:cart_id
+ # GET    {{root_url}}/carts/:cart_id
   def show
     validate_cart_id
     cart = Cart.find(params[:cart_id])
@@ -29,7 +29,7 @@ class CartsController < ApplicationController
 	       ' cart is empty.'
 	    end
       render json: { status: 'SUCCESS', message: 'Checkout successful.' }, status: :ok
-    elsif params[:email] && params[:password] 
+    elsif params[:email] && params[:password]
     	  @user = User.find_by(email: params[:email])
   	  if @user && @user.authenticate(params[:password])
 	      token = encode_token({user_id: @user.id})
@@ -37,11 +37,11 @@ class CartsController < ApplicationController
 	      render json: {token: token,  status: 'SUCCESS', message: 'Checkout successful.' }, status: :ok
 	    else
 	      render json: {error: "Invalid username or password"}
-	    end	
-	  else  
+	    end
+	  else
     	 raise ActionController::BadRequest, 'Login first'\
        ' Send User Credential'
-    end     
+    end
   end
 
 
@@ -49,5 +49,5 @@ class CartsController < ApplicationController
   # Only allow a trusted parameter "white list" through.
 	def cart_params
 	  params.require(:cart).permit(:id, :user_id)
-	end 
-end 
+	end
+end

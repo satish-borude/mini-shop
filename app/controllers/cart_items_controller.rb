@@ -1,5 +1,5 @@
 class CartItemsController < ApplicationController
-	  # before_action :authorized, only: [:auto_login] 	
+	  # before_action :authorized, only: [:auto_login]
 
    def create
       # ensures that all the required parameters are there and exist
@@ -13,8 +13,8 @@ class CartItemsController < ApplicationController
     end
 
     # Updates the quantity for an item in a cart
-    # PUT    /api/v1/carts/:cart_id/cart_items/:product_id
-    # PATCH  /api/v1/carts/:cart_id/cart_items/:product_id
+    # PUT    {{url}}/carts/:cart_id/cart_items/:product_id
+    # PATCH  {{url}}/carts/:cart_id/cart_items/:product_id
     # body ex:
     # {
     #   "item_quantity": 5
@@ -32,7 +32,7 @@ class CartItemsController < ApplicationController
 
     # Removes an item from a cart. If the item doesn't exist or the cart
     # doesn't exist then an error is raised
-    # DELETE /api/v1/carts/:cart_id/cart_items/:product_id
+    # DELETE {{url}}/carts/:cart_id/cart_items/:product_id
     def destroy
       # ensures that all the required parameters are there and exist
       # in the database
@@ -61,4 +61,4 @@ class CartItemsController < ApplicationController
       end
     end
 
-end 
+end
