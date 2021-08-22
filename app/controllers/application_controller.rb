@@ -1,11 +1,11 @@
 class ApplicationController < ActionController::API
 	before_action :authorized!, :only => [:new]
-  
+
   def validate_user_id
     params.require(:user_id)
-    user_id = params[:user_id].to_i 
+    user_id = params[:user_id].to_i
     raise ArgumentError, 'User not found login first.' unless User.exists?(user_id)
-  end 
+  end
 
   def validate_cart_id
     params.require(:cart_id)
@@ -17,7 +17,7 @@ class ApplicationController < ActionController::API
   # and that the product_id exists in the Product table
   def validate_product_id
     params.require(:product_id)
-    product_id = params[:product_id].to_i 
+    product_id = params[:product_id].to_i
     unless Product.exists?(product_id)
       raise ArgumentError, 'Product not found. The product might'\
        ' not exist or has been deleted.'
@@ -26,7 +26,7 @@ class ApplicationController < ActionController::API
 
 
 	def encode_token(payload)
-    JWT.encode(payload, 'yourSecret')
+    JWT.encode(payload, ENV['SECRET_KEY'])
   end
 
   def auth_header
@@ -39,7 +39,7 @@ class ApplicationController < ActionController::API
       token = auth_header.split(' ')[1]
       # header: { 'Authorization': 'Bearer <token>' }
       begin
-        JWT.decode(token, 'yourSecret', true, algorithm: 'HS256')
+        JWT.decode(token, ENV['SECRET_KEY'], true, algorithm: 'HS256')
       rescue JWT::DecodeError
         nil
       end
