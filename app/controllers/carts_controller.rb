@@ -5,7 +5,7 @@ class CartsController < ApplicationController
 
  # POST   {{root_url}}/carts
   def create
-    cart = Cart.create!
+    cart = Cart.create(user_id : params[:user_id])
     render json: { status: 'SUCCESS', message: 'Cart created.', cart: cart }, status: :created
   end
 
